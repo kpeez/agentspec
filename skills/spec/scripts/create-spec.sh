@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# usage: create-spec.sh <name>
-# creates specs/<name>/ with standard template files
+# usage: create-spec.sh <name> [directory]
+# creates <directory>/specs/<name>/ with standard template files
+# defaults to current working directory
 
 if [[ $# -lt 1 ]]; then
-    echo "Usage: create-spec.sh <name>"
+    echo "Usage: create-spec.sh <name> [directory]"
     exit 1
 fi
+
+TARGET_DIR="${2:-.}"
+cd "$TARGET_DIR" || exit 1
 
 RAW_NAME="$1"
 # slugify: lowercase, replace spaces with hyphens

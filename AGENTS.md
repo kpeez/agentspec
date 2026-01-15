@@ -20,9 +20,9 @@ This file is for coding agents. It captures language-agnostic workflow, conventi
 
 The `specs/` folder contains design documents for current tasks. They preserve context across sessions, enabling any new agent to pick up where the last left off.
 
-> **Tip:** Store specs in a cloud-synced location (`~/Documents/specs/<repo>/`) and symlink into each repo for backup and portability.
+**Always read the design document before jumping into doing work!**
 
-**Always read the design document before jumping into doing work!** Unless the user specifies no spec required.
+> **Tip:** Store specs in a cloud-synced location (`~/Documents/specs/<repo>/`) and symlink into each repo for backup and portability.
 
 Each spec lives in its own folder: `specs/<feature>/` with the following files (created by `/spec new`):
 
@@ -87,6 +87,17 @@ Don't create ceremony - only log decisions that future-you would wonder about.
 3. Review the `design.md` if needed
 4. Check `ledger.md` for current status and next tasks
 5. Update `ledger.md` as you work (especially Done/Next/Context)
+
+### Auto-discovery
+
+When starting ANY task:
+
+1. Check if `specs/` directory exists at project root
+2. If yes, run `/spec status` to see active specs
+3. Read the relevant spec's `AGENTS.md` and `ledger.md` before proceeding
+4. Only create a new spec (`/spec new`) if no matching spec exists
+
+Note: `specs/` may be gitignored and won't appear in @ autocomplete—always check by path.
 
 ---
 

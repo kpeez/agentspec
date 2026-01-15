@@ -4,6 +4,7 @@
 .vscode/
 .env
 node_modules
+specs
 
 # OS files
 .directory

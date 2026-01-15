@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# usage: status.sh
-# shows status of all specs in specs/
+# usage: status.sh [directory]
+# shows status of all specs in <directory>/specs/
+# defaults to current working directory
+
+TARGET_DIR="${1:-.}"
+cd "$TARGET_DIR" || exit 1
 
 if [[ ! -d "specs" ]]; then
     echo "No specs/ directory found."
@@ -30,16 +34,17 @@ for spec_dir in $SPECS; do
         continue
     fi
 
-    # extract phase
-    phase=$(grep -E '^\s*-\s*\*\*Phase\*\*:' "$ledger" 2>/dev/null | sed 's/.*: *//' | head -1)
+    # extract phase (use command to bypass aliases like grep->rg)
+    phase=$(command grep -E '^\s*-\s*\*\*Phase\*\*:' "$ledger" 2>/dev/null | sed 's/.*: *//' | head -1)
     phase=${phase:-"?"}
 
     # extract blocked status
-    blocked=$(grep -E '^\s*-\s*\*\*Blocked\*\*:' "$ledger" 2>/dev/null | sed 's/.*: *//' | head -1)
+    blocked=$(command grep -E '^\s*-\s*\*\*Blocked\*\*:' "$ledger" 2>/dev/null | sed 's/.*: *//' | head -1)
     blocked=${blocked:-"?"}
 
     # extract first unchecked item from Next section
-    next=$(awk '/^## Next/,/^## / {print}' "$ledger" 2>/dev/null | grep -E '^\s*-\s*\[\s*\]' | head -1 | sed 's/.*\] *//')
+    # use sed to extract lines between ## Next and the next ## heading
+    next=$(sed -n '/^## Next$/,/^## /{/^## Next$/d;/^## /d;p;}' "$ledger" 2>/dev/null | command grep -E '^\s*-\s*\[\s*\]' | head -1 | sed 's/.*\] *//')
     next=${next:-"(none)"}
     # truncate if too long
     if [[ ${#next} -gt 40 ]]; then

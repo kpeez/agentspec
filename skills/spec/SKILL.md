@@ -9,7 +9,7 @@ description: Create and manage feature specs for context continuity across agent
 
 ### /spec new <name>
 
-Run: `scripts/create-spec.sh "<name>"`
+Run: `scripts/create-spec.sh "<name>" "$PWD"`
 
 Creates `specs/<name>/` with: AGENTS.md, design.md, ledger.md, decisions.md, future-work.md
 
@@ -22,7 +22,7 @@ After creation, populate the AGENTS.md based on the user's feature request:
 
 ### /spec status
 
-Run: `scripts/status.sh`
+Run: `scripts/status.sh "$PWD"`
 
 Shows a table of all specs with their phase, blocked status, and next task.
 
