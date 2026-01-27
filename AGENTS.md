@@ -165,50 +165,63 @@ When starting ANY task:
 
 ## Coding design principles
 
-- Write elegant code; choose the simplest construct that expresses intent.
-- Never duplicate behavior; remove or reuse existing helpers instead of adding near-duplicates.
-- Names must be descriptive with auxiliaries (`is_active`, `has_permission`, `should_retry`). Avoid cryptic abbreviations.
-- Use RORO (receive an object, return an object) for complex parameters/results. Prefer keyword-only args for clarity.
-- Replace literals with named constants; keep constants at the top of a module or in a dedicated constants file.
-- Keep modules small; group related code.
+### 1. Think Before Coding
 
-### Comments & documentation
+**Don't assume. Don't hide confusion. Surface tradeoffs.**
 
-- Comments are only for *why*, never for *what*. Do not restate code. All comments lowercase and concise.
-- Prefer docstrings for public functions/classes when intent or side effects aren't obvious.
-- Avoid "slop comments" like `# do thing`; remove or rewrite them as justification or design notes.
+- **State assumptions explicitly** — If uncertain, ask rather than guess
+- **Present multiple interpretations** — Don't pick silently when ambiguity exists
+- **Push back when warranted** — If a simpler approach exists, say so
+- **Stop when confused** — Name what's unclear and ask for clarification
 
-### Error handling
+### 2. Simplicity First
 
-- Don't over-guard or be overly defensive; raise/catch only when a failure is expected or actionable.
-- Fail fast with clear messages; avoid silent passes.
+**Minimum code that solves the problem. Nothing speculative.**
 
-### Testing
+Combat the tendency toward overengineering:
 
-- Keep tests small, focused, and readable; mirror source layout under `tests/`.
-- Test edge cases and regression paths. Write/adjust tests before fixing bugs when feasible.
+- No features beyond what was asked
+- No abstractions for single-use code
+- No "flexibility" or "configurability" that wasn't requested
+- No error handling for impossible scenarios
+- If 200 lines could be 50, rewrite it
 
-### Performance & quality
+**The test:** Would a senior engineer say this is overcomplicated? If yes, simplify.
 
-- Run lint, type checks, and relevant tests locally before handing off. Aim for clean, actionable diffs.
-- Default to small, reviewable changes; avoid repo-wide rewrites unless requested.
+### 3. Surgical Changes
 
-### Dependencies
+**Touch only what you must. Clean up only your own mess.**
 
-- Minimize new deps; justify every addition. Prefer stdlib first, then existing project deps. No heavy/unstable packages without approval.
-- Remove dead deps when noticed.
+When editing existing code:
 
-### Security & data
+- Don't "improve" adjacent code, comments, or formatting
+- Don't refactor things that aren't broken
+- Match existing style, even if you'd do it differently
+- If you notice unrelated dead code, mention it — don't delete it
 
-- Never commit secrets; respect `.gitignore`/`.ignore`. Use environment variables for credentials.
-- Be cautious with file IO and network calls; follow least-privilege defaults.
+When your changes create orphans:
 
-### Pull requests & git hygiene
+- Remove imports/variables/functions that YOUR changes made unused
+- Don't remove pre-existing dead code unless asked
 
-- Keep commits logically scoped; write imperative, specific messages.
-- Ensure formatting/lint/type/tests pass before raising a PR.
+**The test:** Every changed line should trace directly to the user's request.
 
-### Updating this file
+### 4. Goal-Driven Execution
 
-- When conventions change (workflow, style, test strategy), update here first.
-- Keep instructions specific and actionable; avoid vague rules.
+**Define success criteria. Loop until verified.**
+
+Transform imperative tasks into verifiable goals:
+
+| Instead of...    | Transform to...                                       |
+|------------------|-------------------------------------------------------|
+| "Add validation" | "Write tests for invalid inputs, then make them pass" |
+| "Fix the bug"    | "Write a test that reproduces it, then make it pass"  |
+| "Refactor X"     | "Ensure tests pass before and after"                  |
+
+For multi-step tasks, state a brief plan:
+
+<plan>
+1. [Step] → verify: [check]
+2. [Step] → verify: [check]
+3. [Step] → verify: [check]
+</plan>

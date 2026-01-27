@@ -30,12 +30,12 @@ agentspecs/
 
 ## Skills
 
-| Skill              | Purpose                                                                             |
-|--------------------|-------------------------------------------------------------------------------------|
+| Skill              | Purpose                                                                                                            |
+|--------------------|--------------------------------------------------------------------------------------------------------------------|
 | `/spec new <name>` | Create feature spec (AGENTS.md, CLAUDE.md, design.md, ledger.md, decisions.md, future-work.md, optional examples/) |
-| `/spec status`     | Show status of all active specs                                                     |
-| `/handoff`         | Capture session context for seamless resume                                         |
-| `python`           | Python conventions (auto-loads when writing Python)                                 |
+| `/spec status`     | Show status of all active specs                                                                                    |
+| `/handoff`         | Capture session context for seamless resume                                                                        |
+| `python`           | Python conventions (auto-loads when writing Python)                                                                |
 
 ## Feature Spec Workflow
 
