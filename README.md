@@ -26,11 +26,11 @@ Run the update script to sync to all supported AI CLIs:
 
 This installs to:
 
-| CLI | Instructions | Skills |
-|-----|-------------|--------|
+| CLI         | Instructions          | Skills                        |
+|-------------|-----------------------|-------------------------------|
 | Claude Code | `~/.claude/CLAUDE.md` | `~/.claude/skills/` (symlink) |
-| Codex CLI | `~/.codex/AGENTS.md` | `~/.codex/skills/` (copy) |
-| Gemini CLI | `~/.gemini/GEMINI.md` | `~/.gemini/skills/` (symlink) |
+| Codex CLI   | `~/.codex/AGENTS.md`  | `~/.codex/skills/` (copy)     |
+| Gemini CLI  | `~/.gemini/GEMINI.md` | `~/.gemini/skills/` (symlink) |
 
 Re-run after updating agentspecs. Codex requires copying (ignores symlinks).
 
